@@ -1,61 +1,51 @@
 ---
-interface Props {
-	title: string;
-	body: string;
-	href: string;
-}
+import ImgsCard from "./ImgsCard.astro";
 
-const { href, title, body } = Astro.props;
+interface Props {
+    name: string;
+    urlPerfil: string;
+    fechaAnime: string;
+    estado: string;
+    doblaje?: string;
+    urlAnime?: string;
+}
+const {
+    name,
+    urlPerfil,
+    fechaAnime = "24/09/2024",
+    estado,
+    doblaje,
+    urlAnime = name,
+} = Astro.props;
+
+const qrColor = estado === "Completed" ? true : false;
+const qrEstado = estado === "Completed" ? "Finalizado" : "En curso";
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<h2>
-			{title}
-			<span>&rarr;</span>
-		</h2>
-		<p>
-			{body}
-		</p>
-	</a>
-</li>
-<style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 1px;
-		background-color: #23262d;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 7px;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-	}
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #23262d;
-		opacity: 0.8;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-	}
-	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
-	}
-	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent-light));
-	}
-</style>
+<article
+    class="relative flex flex-col items-center justify-center w-56 transition-all bg-[#121226]/50 border border-midu-primary/40 rounded-[20px] group overflow-hidden hover:scale-110"
+>
+    <div class="w-full p-[14px] rounded transition">
+        <figure class="flex items-center justify-center">
+            <ImgsCard src={urlPerfil} alt={name} />
+        </figure>
+        <header class="flex items-center justify-between mt-4 gap-x-2">
+            <h3 class="text-[16px] font-bold text-left text-white">
+                <a href={urlAnime} rel="external noopener nofollow">{name}</a>
+            </h3><span
+                class:list={[
+                    "p-1 rounded-md text-[10px] text-white/60 flex items-center",
+                    {
+                        "bg-green-700 ": qrColor,
+                        "bg-red-700": !qrColor,
+                    },
+                ]}>{qrEstado}</span
+            >
+        </header>
+        <footer class="flex items-center justify-between gap-x-2">
+            <p class="text-xs text-left text-white/60">
+                Creado :{fechaAnime}
+            </p><span class="text-slate-300 text-xs">{doblaje}</span>
+        </footer>
+    </div>
+</article>

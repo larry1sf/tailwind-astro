@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getLaunById } from "../../services/peticiones";
+
+const { id } = Astro.params;
+// console.log({ id });
+
+let launch;
+if (id) {
+    launch = await getLaunById({ id: id });
+}
+
+// getStaticPaths
+console.log(launch);
+console.log("s");
+
+export function getStaticPaths() {
+    return [{ params: { id: "" } }];
+}
+---
+
+<Layout title={"dimanic pages"}>
+    <article>{launch?.id}</article>
+    <article>{launch?.description}</article>
+</Layout>

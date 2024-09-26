@@ -1,0 +1,44 @@
+---
+import HeaderButton from "./HeaderButton.astro";
+
+// interface {
+//     title:String
+// }
+---
+
+<header class="max-w-full mx-auto px-4 py-8 lg:py-12 lg:px-8 font-sans">
+    <div class="flex items-center flex-col text-white space-y-7">
+        <h1 class="text-6xl font-bold">
+            AnimeVision es para <span class="text-gradient">Todos! </span>
+        </h1>
+        <strong
+            class="text-lg text-slate-300 font-normal max-w-2xl min-w-sm me-5"
+            >Estamos empezando por ende no tenemos mucha variedad en productos
+            pero estamos trabajando para ello, ven y distraete un rato 🌐
+        </strong>
+    </div>
+    <div
+        class="text-white text-sm p-4 md:p-8 md:flex-row md:space-x-6 flex flex-col space-y-1 items-center justify-center"
+    >
+        <HeaderButton>
+            Mas gustados
+            <span class="px-1 inline-block md:rotate-90" slot="simbol">
+                &#9885;
+            </span>
+        </HeaderButton>
+
+        <HeaderButton>
+            Coleccion completa
+            <span class="inline-block -rotate-90 md:rotate-0" slot="simbol"
+                >&#8595;
+            </span>
+        </HeaderButton>
+        <!-- boton de comunicacion -->
+        <a
+            role="button"
+            class="text-sm font-semibold px-5 py-2 rounded-md max-w-34 bg-sky-500 border-2 border-sky-500 shadow-lg hover:bg-transparent text-white hover:text-sky-500 duration-300 cursor-pointer active:scale-[0.98]"
+            href="/whatsapp"
+            >Comunicanos &#9742;
+        </a>
+    </div>
+</header>
