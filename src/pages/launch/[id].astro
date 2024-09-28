@@ -1,25 +1,194 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
-import { getLaunById } from "../../services/peticiones";
+import {
+    getServers,
+    getLaunById,
+    getAllPeticiones,
+} from "../../services/peticiones";
+import Card from "../../components/Card.astro";
+import BtnsServidores from "../../components/BtnsServidores.astro";
+
+// export const prerender = false; //envio al servidos
 
 const { id } = Astro.params;
-// console.log({ id });
-
-let launch;
+let launch = null;
 if (id) {
-    launch = await getLaunById({ id: id });
+    launch = await getLaunById({ id });
+    launch = launch.ddt;
 }
-
-// getStaticPaths
 console.log(launch);
-console.log("s");
 
-export function getStaticPaths() {
-    return [{ params: { id: "" } }];
+export async function getStaticPaths() {
+    const launches = await getAllPeticiones([
+        "kaiju-8",
+        "jujutsu-kaisen",
+        "bleach",
+        "tokyo-revengers",
+        "one-piece",
+    ]);
+    return launches.flatMap((elLisst) => {
+        return elLisst.map((launch) => ({ params: { id: launch.id } }));
+    });
 }
+
+const qrGeneros = launch?.genres.map((e) => {
+    if (e === launch?.genres.at(-1)) {
+        return e;
+    }
+    return `${e}, `;
+});
+
+const reformatName = (val = "") => {
+    const x = val.split("-");
+    return x.join(" ");
+};
+
+const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
 ---
 
-<Layout title={"dimanic pages"}>
-    <article>{launch?.id}</article>
-    <article>{launch?.description}</article>
+<Layout title={`${id} | anime en linea - AnimeVision`}>
+    <article>
+        <div
+            class="grid gap-y-0 grid-cols-1 sm:grid-cols-3 md:grid-cols-4 place-items-center"
+        >
+            <Image
+                class="rounded-xl shadow-xl start-0"
+                src={launch?.image ?? ""}
+                alt={launch?.otherName ?? ""}
+                title={launch?.title}
+                height={250}
+                width={250}
+                loading="eager"
+            />
+            <h2
+                class="text-2xl py-6 px-4 font-semibold sm:col-span-3 sm:row-start-1 sm:col-start-2 sm:-translate-y-20"
+            >
+                {launch?.title}
+            </h2>
+            <div
+                class="m-2 ms-4 place-content-center text-center text-[14px] grid grid-cols-1 gap-x-4 gap-y-2 justify-items-center sm:col-span-3 sm:grid-cols-2 sm:max-w-xx lg:max-w-3xl sm:text-[14px] sm:row-start-1 sm:col-start-2 sm:translate-y-1/3 md:text-[15px]"
+            >
+                <b class="text-center font-medium">
+                    Genero: <span class="font-normal"> {qrGeneros}</span>
+                </b>
+                <b class="font-medium"
+                    >Anime creado en el año <span class="font-normal"
+                        >{launch?.releaseDate}</span
+                    ></b
+                >
+                <b class="font-medium capitalize">
+                    Tramitido: <span class="font-normal"> {launch?.type}</span>
+                </b>
+                <b class="font-medium"
+                    >Estado del anime: <span class="font-normal"
+                        >{qrEstado}</span
+                    ></b
+                >
+                <b class="font-medium"
+                    >Numero de episodios: <span class="font-normal"
+                        >{launch?.totalEpisodes}</span
+                    ></b
+                >
+                <b class="font-medium">
+                    Doblaje: <span class="font-normal">
+                        {launch?.subOrDub}</span
+                    >
+                </b>
+            </div>
+            <p
+                class="text-lg text-center sm:text-left sm:col-span-3 md:col-span-4 pt-4"
+            >
+                {launch?.description}
+            </p>
+        </div>
+    </article>
+    <article class="py-8">
+        <div
+            class="flex flex-col sm:flex-row text-center text-3xl font-medium py-3 relative"
+        >
+            <div
+                class="basis-full sm:basis-6/12 flex flex-col items-center gap-2"
+            >
+                <div class="mb-10">
+                    <h2>Acceder de manera privada</h2>
+                </div>
+                <div>
+                    <div
+                        id="scroll-caps"
+                        class="max-h-96 min-w-auto overflow-y-auto overflow-x-hidden bg-slate-800 relative rounded-md snap-mandatory snap-y scroll-pt-8 sm:scroll-pt-[9.5rem] py-4 shadow-xl"
+                    >
+                        <div
+                            class="absolute top-4 left-0 right-0 flex justify-center items-center"
+                        >
+                            <b class="mx-auto text-sm font-normal"
+                                >Total de Capitulos: {launch?.totalEpisodes}</b
+                            >
+                        </div>
+                        <div class="flex flex-col items-center gap-3 pt-10">
+                            {
+                                launch?.episodes.map((episode) => (
+                                    <BtnsServidores
+                                        imgCap={launch.image}
+                                        nameCap={reformatName(episode.id)}
+                                        descCap={launch.description.slice(
+                                            0,
+                                            25,
+                                        )}
+                                        urlCap="kaijuu-8-gou-episode-1"
+                                        nameUrlcap=""
+                                    />
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="basis-full sm:basis-6/12 flex flex-col items-center gap-2"
+            >
+                <div class="mb-10">
+                    <h3>Acceder de manera publica</h3>
+                </div>
+                <div
+                    id="scroll-caps"
+                    class="max-h-96 min-w-auto overflow-y-auto overflow-x-hidden bg-slate-800 relative rounded-md snap-mandatory snap-y scroll-pt-8 sm:scroll-pt-[9.5rem] py-4 shadow-xl"
+                >
+                    <div
+                        class="absolute top-4 left-0 right-0 flex justify-center items-center"
+                    >
+                        <b class="mx-auto text-sm font-normal"
+                            >Total de Capitulos: {launch?.totalEpisodes}</b
+                        >
+                    </div>
+                    <div class="flex flex-col items-center gap-3 pt-10">
+                        {
+                            launch?.episodes.map((episode) => (
+                                <BtnsServidores
+                                    imgCap={launch.image}
+                                    nameCap={reformatName(episode.id)}
+                                    descCap={launch.description.slice(0, 25)}
+                                    urlCap="kaijuu-8-gou-episode-1"
+                                    nameUrlcap=""
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="w-full absolute -bottom-16 flex justify-start">
+                <a
+                    href="/"
+                    class="text-sm font-semibold px-5 py-2 rounded-md max-w-34 bg-sky-500 border-2 border-sky-500 shadow-lg hover:bg-transparent text-white hover:text-sky-500 duration-300 cursor-pointer active:scale-[0.98]"
+                    >Volver</a
+                >
+            </div>
+        </div>
+    </article>
 </Layout>
+<style>
+    *::-webkit-scrollbar-track {
+        border-top-right-radius: 50vw 50vw;
+        border-bottom-right-radius: 50vw 50vw;
+    }
+</style>

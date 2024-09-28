@@ -1,3 +1,4 @@
+import type { number } from "astro:schema";
 
 export type resApiAnimes = {
     currentPage: number;
@@ -36,7 +37,9 @@ export type ResApiInfoAnimes = {
 }
 
 export type Episode = {
-    id:     string;
-    number: number;
-    url:    string;
+    id:            string;
+    number:        number;
+    url:           string;
 }
+
+

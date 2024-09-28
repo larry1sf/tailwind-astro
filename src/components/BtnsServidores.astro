@@ -1,0 +1,44 @@
+---
+import Image from "astro/components/Image.astro";
+
+interface Props {
+    nameCap: string;
+    descCap: string;
+    nameUrlcap?: string;
+    urlCap: string;
+    imgCap?: string;
+}
+const {
+    nameCap = "",
+    descCap = "",
+    imgCap = "https://gogocdn.net/cover/kaijuu-8-gou-1711734879.png",
+    urlCap = "",
+    nameUrlcap = "",
+} = Astro.props;
+---
+
+<a
+    href={urlCap}
+    class="cursor-default flex flex-col gap-2 w-60 sm:w-72 text-[10px] sm:text-xs z-50 px-3 snap-center"
+>
+    <div
+        class="cursor-pointer succsess-alert flex items-center gap-1 justify-around w-full rounded-md shadow-md bg-[#3f40429a] px-[10px]"
+    >
+        <div
+            class="text-[#2b9875] bg-white/5 backdrop-blur-2xl p-[2px] rounded-md my-1 shadow-md"
+        >
+            <Image
+                class="rounded-md"
+                src={imgCap}
+                alt={descCap}
+                loading="lazy"
+                height={45}
+                width={35}
+            />
+        </div>
+        <div>
+            <p class="text-white">{nameCap} :)</p>
+            <p class="text-gray-400">Link padre parde de:{nameUrlcap}</p>
+        </div>
+    </div>
+</a>

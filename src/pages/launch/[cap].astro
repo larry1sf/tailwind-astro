@@ -1,0 +1,9 @@
+---
+import type { GetStaticPaths } from "astro";
+const { cap } = Astro.params;
+
+console.log(cap);
+export const getStaticPaths = (() => {
+    return [{ params: { cap: "kaijuu-8-gou-episode-1" } }];
+}) satisfies GetStaticPaths;
+---
