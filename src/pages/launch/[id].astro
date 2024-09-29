@@ -1,13 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
+import { Counter } from "../../components/Counter";
 import {
     getServers,
     getLaunById,
     getAllPeticiones,
 } from "../../services/peticiones";
 import Card from "../../components/Card.astro";
-import BtnsServidores from "../../components/BtnsServidores.astro";
+import BtnsCaps from "../../components/BtnsCaps.astro";
 
 // export const prerender = false; //envio al servidos
 
@@ -17,7 +18,7 @@ if (id) {
     launch = await getLaunById({ id });
     launch = launch.ddt;
 }
-console.log(launch);
+console.log(id);
 
 export async function getStaticPaths() {
     const launches = await getAllPeticiones([
@@ -103,12 +104,12 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
             </p>
         </div>
     </article>
-    <article class="py-8">
+    <article transition:persist class="py-8">
         <div
-            class="flex flex-col sm:flex-row text-center text-3xl font-medium py-3 relative"
+            class="flex flex-col md:flex-row text-center text-3xl font-medium py-3 relative"
         >
             <div
-                class="basis-full sm:basis-6/12 flex flex-col items-center gap-2"
+                class="basis-full md:basis-6/12 flex flex-col items-center gap-2"
             >
                 <div class="mb-10">
                     <h2>Acceder de manera privada</h2>
@@ -116,36 +117,14 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                 <div>
                     <div
                         id="scroll-caps"
-                        class="max-h-96 min-w-auto overflow-y-auto overflow-x-hidden bg-slate-800 relative rounded-md snap-mandatory snap-y scroll-pt-8 sm:scroll-pt-[9.5rem] py-4 shadow-xl"
+                        class="h-auto min-w-auto bg-slate-800 relative rounded-md p-4 shadow-xl"
                     >
-                        <div
-                            class="absolute top-4 left-0 right-0 flex justify-center items-center"
-                        >
-                            <b class="mx-auto text-sm font-normal"
-                                >Total de Capitulos: {launch?.totalEpisodes}</b
-                            >
-                        </div>
-                        <div class="flex flex-col items-center gap-3 pt-10">
-                            {
-                                launch?.episodes.map((episode) => (
-                                    <BtnsServidores
-                                        imgCap={launch.image}
-                                        nameCap={reformatName(episode.id)}
-                                        descCap={launch.description.slice(
-                                            0,
-                                            25,
-                                        )}
-                                        urlCap="kaijuu-8-gou-episode-1"
-                                        nameUrlcap=""
-                                    />
-                                ))
-                            }
-                        </div>
+                        <Counter client:load id={id} />
                     </div>
                 </div>
             </div>
             <div
-                class="basis-full sm:basis-6/12 flex flex-col items-center gap-2"
+                class="h-[19rem] basis-full md:basis-6/12 flex flex-col items-center gap-2"
             >
                 <div class="mb-10">
                     <h3>Acceder de manera publica</h3>
@@ -164,7 +143,7 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                     <div class="flex flex-col items-center gap-3 pt-10">
                         {
                             launch?.episodes.map((episode) => (
-                                <BtnsServidores
+                                <BtnsCaps
                                     imgCap={launch.image}
                                     nameCap={reformatName(episode.id)}
                                     descCap={launch.description.slice(0, 25)}
@@ -186,9 +165,43 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
         </div>
     </article>
 </Layout>
-<style>
+<style is:global>
     *::-webkit-scrollbar-track {
         border-top-right-radius: 50vw 50vw;
         border-bottom-right-radius: 50vw 50vw;
+    }
+
+    #favorito:checked + .fav {
+        color: red;
+        transition: 0.15s;
+        animation: open-favorito 0.15s ease-in-out both alternate;
+    }
+    #favorito:not(:checked) + .fav {
+        color: whitesmoke;
+        animation: noopen-favorito 0.15s ease-in-out;
+        transition: 0.25s;
+    }
+
+    @keyframes noopen-favorito {
+        0% {
+            scale: 1;
+        }
+        40% {
+            scale: 0.85;
+        }
+        100% {
+            scale: 1;
+        }
+    }
+    @keyframes open-favorito {
+        0% {
+            scale: 1;
+        }
+        40% {
+            scale: 0.85;
+        }
+        100% {
+            scale: 1;
+        }
     }
 </style>
