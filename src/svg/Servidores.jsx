@@ -1,7 +1,8 @@
 export default function Servidores() {
     return (
         <svg
-            heigth="36px"
+            class="py-2"
+            heigth="24px"
             width="20px"
             xmlns="http://www.w3.org/2000/svg"
             fill="#00f"

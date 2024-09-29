@@ -109,15 +109,14 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
             class="flex flex-col md:flex-row text-center text-3xl font-medium py-3 relative"
         >
             <div
-                class="basis-full md:basis-6/12 flex flex-col items-center gap-2"
+                class="h-[19rem] basis-full md:basis-6/12 flex flex-col items-center gap-2"
             >
                 <div class="mb-10">
                     <h2>Acceder de manera privada</h2>
                 </div>
-                <div>
+                <div class="h-full w-full px-24">
                     <div
-                        id="scroll-caps"
-                        class="h-auto min-w-auto bg-slate-800 relative rounded-md p-4 shadow-xl"
+                        class="h-full bg-slate-800 relative rounded-md p-4 shadow-xl"
                     >
                         <Counter client:load id={id} />
                     </div>
@@ -182,6 +181,15 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
         transition: 0.25s;
     }
 
+    .send:active {
+        animation: open-favorito 0.15s ease-in-out;
+    }
+    .fade {
+        animation: fade-in 150ms ease;
+    }
+    .scrolear::-webkit-scrollbar-track-piece {
+        scroll-inline-margin: 10px 0;
+    }
     @keyframes noopen-favorito {
         0% {
             scale: 1;
@@ -202,6 +210,17 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
         }
         100% {
             scale: 1;
+        }
+    }
+    * {
+        user-select: none;
+    }
+    @keyframes fade-in {
+        0% {
+            opacity: 0.2;
+        }
+        100% {
+            opacity: 1;
         }
     }
 </style>
