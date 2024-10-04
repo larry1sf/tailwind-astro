@@ -1,4 +1,3 @@
-import { h } from 'preact'
 
 const Lupa = ({ width = 24, height = 36, color = 'currentColor', title = 'Lupa' }) => {
     return (

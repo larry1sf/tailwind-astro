@@ -2,23 +2,16 @@
 import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import { Counter } from "../../components/Counter";
-import {
-    getServers,
-    getLaunById,
-    getAllPeticiones,
-} from "../../services/peticiones";
-import Card from "../../components/Card.astro";
+import { getLaunById, getAllPeticiones } from "../../services/peticiones";
 import BtnsCaps from "../../components/BtnsCaps.astro";
 
 // export const prerender = false; //envio al servidos
-
 const { id } = Astro.params;
 let launch = null;
 if (id) {
     launch = await getLaunById({ id });
     launch = launch.ddt;
 }
-console.log(id);
 
 export async function getStaticPaths() {
     const launches = await getAllPeticiones([
@@ -112,7 +105,7 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                 class="h-[19rem] basis-full md:basis-6/12 flex flex-col items-center gap-2"
             >
                 <div class="mb-10">
-                    <h2>Acceder de manera privada</h2>
+                    <h2>Tablero de Opciones</h2>
                 </div>
                 <div class="h-full w-full px-20">
                     <div
@@ -123,23 +116,25 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                 </div>
             </div>
             <div
-                class="h-[19rem] basis-full md:basis-6/12 flex flex-col items-center gap-2"
+                class="max-h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2"
             >
-                <div class="mb-10">
-                    <h3>Acceder de manera publica</h3>
+                <div class="mb-10 max-h-[30%]">
+                    <h3>Capitulos</h3>
                 </div>
                 <div
                     id="scroll-caps"
-                    class="max-h-96 min-w-auto overflow-y-auto overflow-x-hidden bg-slate-800 relative rounded-md snap-mandatory snap-y scroll-pt-8 sm:scroll-pt-[9.5rem] py-4 shadow-xl"
+                    class="h-[70%] min-w-auto pb-4 bg-slate-800 relative rounded-md shadow-xl"
                 >
                     <div
-                        class="absolute top-4 left-0 right-0 flex justify-center items-center"
+                        class="h-[20%] flex justify-center items-center relative"
                     >
-                        <b class="mx-auto text-sm font-normal"
+                        <b class="mx-auto text-xl font-bold p-4"
                             >Total de Capitulos: {launch?.totalEpisodes}</b
                         >
                     </div>
-                    <div class="flex flex-col items-center gap-3 pt-10">
+                    <div
+                        class="max-h-44 flex flex-col items-center gap-3 pt-10 scroll-smooth overflow-y-auto overflow-x-hidden snap-mandatory snap-y pe-1 me-3"
+                    >
                         {
                             launch?.episodes.map((episode) => (
                                 <BtnsCaps
@@ -147,7 +142,7 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                                     nameCap={reformatName(episode.id)}
                                     descCap={launch.description.slice(0, 25)}
                                     urlCap="kaijuu-8-gou-episode-1"
-                                    nameUrlcap=""
+                                    nameUrlcap={episode.id}
                                 />
                             ))
                         }

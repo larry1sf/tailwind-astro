@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import Lupa from "../svg/Lupa"
+
 import Servidores from "../svg/Servidores";
 import Send from "../svg/Send";
 

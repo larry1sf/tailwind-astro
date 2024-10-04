@@ -1,4 +1,3 @@
-import type { number } from "astro:schema";
 
 export type resApiAnimes = {
     currentPage: number;
