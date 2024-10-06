@@ -97,43 +97,42 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
             </p>
         </div>
     </article>
-    <article transition:persist class="py-8">
+    <article class="py-8">
         <div
             class="flex flex-col md:flex-row text-center text-3xl font-medium py-3 relative"
         >
             <div
-                class="h-[19rem] basis-full md:basis-6/12 flex flex-col items-center gap-2"
-            >
-                <div class="mb-10">
-                    <h2>Tablero de Opciones</h2>
-                </div>
-                <div class="h-full w-full px-20">
-                    <div
-                        class="h-full bg-slate-800 relative rounded-md p-4 shadow-xl"
-                    >
-                        <Counter client:load id={id} />
-                    </div>
-                </div>
-            </div>
-            <div
                 class="max-h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2"
             >
-                <div class="mb-10 max-h-[30%]">
-                    <h3>Capitulos</h3>
+                <div class="max-h-[30%] mb-10">
+                    <h2 class="pb-2">Tablero de Opciones</h2>
+                </div>
+                <div
+                    class="min-h-[70%] min-w-[calc(20rem+4px)] bg-slate-800 relative rounded-md p-4 shadow-xl"
+                >
+                    <Counter imgBgVoid={launch?.image} client:load id={id} />
+                </div>
+            </div>
+            <!-- capitulos site -->
+            <div
+                class="h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2"
+            >
+                <div class="mb-10 h-[30%]">
+                    <h3 class="pb-2">Capitulos</h3>
                 </div>
                 <div
                     id="scroll-caps"
-                    class="h-[70%] min-w-auto pb-4 bg-slate-800 relative rounded-md shadow-xl"
+                    class="h-[70%] min-w-auto py-4 bg-slate-800 relative rounded-md shadow-xl"
                 >
                     <div
                         class="h-[20%] flex justify-center items-center relative"
                     >
-                        <b class="mx-auto text-xl font-bold p-4"
+                        <b class="mx-auto pb-2 text-2xl font-bold"
                             >Total de Capitulos: {launch?.totalEpisodes}</b
                         >
                     </div>
                     <div
-                        class="max-h-44 flex flex-col items-center gap-3 pt-10 scroll-smooth overflow-y-auto overflow-x-hidden snap-mandatory snap-y pe-1 me-3"
+                        class="h-[80%] flex flex-col items-center gap-3 scroll-smooth overflow-y-auto overflow-x-hidden snap-mandatory snap-y pe-1 me-3"
                     >
                         {
                             launch?.episodes.map((episode) => (
@@ -149,6 +148,8 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                     </div>
                 </div>
             </div>
+            <!-- fin capitulos site-->
+            <!-- boton volver & ... -->
             <div class="w-full absolute -bottom-16 flex justify-start">
                 <a
                     href="/"
@@ -156,6 +157,7 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                     >Volver</a
                 >
             </div>
+            <!-- fin boton volver & ... -->
         </div>
     </article>
 </Layout>
@@ -176,6 +178,9 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
         transition: 0.25s;
     }
 
+    #scroll-notas::-webkit-scrollbar-track {
+        border-bottom-right-radius: 0;
+    }
     .send:active {
         animation: open-favorito 0.15s ease-in-out;
     }

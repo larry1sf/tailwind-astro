@@ -3,19 +3,17 @@ import {type ResApiInfoAnimes, type resApiAnimes } from "../types/resApiAnimes";
 const proveedor = new ANIME.Gogoanime();
 
 export const getLaunById = async ({id}:{id:string}) => {
-// const data = async (busqueda = "") => {
     const {results:datos} = await proveedor.search(id) as resApiAnimes
-    const {...ddt} = await proveedor.fetchAnimeInfo(datos[0].id) as ResApiInfoAnimes
-    
+    const {...ddt} = await proveedor.fetchAnimeInfo(datos[0].id) as ResApiInfoAnimes    
     return {ddt,datos}
 };
-// return data(id)
-// }
 
 
-export const getServers = async ({id}:{id:string}) =>{
-    const {ddt:epi} = await getLaunById({id})
-    // const epis = epi.episodes.map((e)=>e.id)
+
+export const getmoreAnimes = async ({id}:{id:string}) =>{
+    
+    const {datos:epi} = await getLaunById({id})
+    return epi
 }
 
 
