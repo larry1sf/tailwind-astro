@@ -25,108 +25,31 @@ const { title = "Recien añadidos" } = Astro.props;
     class="grid grid-cols-1 my-10 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-0 gap-y-6"
 >
     {
-        cards[0].map(
-            ({
-                id = "",
-                title = "",
-                image = "",
-                releaseDate: fecha = "",
-                estado = "",
-                subOrDub = "",
-            }) => (
-                <Card
-                    name={title}
-                    urlAnime={id}
-                    urlPerfil={image}
-                    fechaAnime={fecha}
-                    estado={estado}
-                    doblaje={subOrDub}
-                />
-            ),
-        )
-    }
-    {
-        cards[1].map(
-            ({
-                id = "",
-                title = "",
-                image = "",
-                releaseDate: fecha = "",
-                estado = "",
-                subOrDub = "",
-            }) => (
-                <Card
-                    name={title}
-                    urlAnime={id}
-                    urlPerfil={image}
-                    fechaAnime={fecha}
-                    estado={estado}
-                    doblaje={subOrDub}
-                />
-            ),
-        )
-    }
-    {
-        cards[2].map(
-            ({
-                id = "",
-                title = "",
-                image = "",
-                releaseDate: fecha = "",
-                estado = "",
-                subOrDub = "",
-            }) => (
-                <Card
-                    name={title}
-                    urlAnime={id}
-                    urlPerfil={image}
-                    fechaAnime={fecha}
-                    estado={estado}
-                    doblaje={subOrDub}
-                />
-            ),
-        )
-    }
-    {
-        cards[3].map(
-            ({
-                id = "",
-                title = "",
-                image = "",
-                releaseDate: fecha = "",
-                estado = "",
-                subOrDub = "",
-            }) => (
-                <Card
-                    name={title}
-                    urlAnime={id}
-                    urlPerfil={image}
-                    fechaAnime={fecha}
-                    estado={estado}
-                    doblaje={subOrDub}
-                />
-            ),
-        )
-    }
-    {
-        cards[4].map(
-            ({
-                id = "",
-                title = "",
-                image = "",
-                releaseDate: fecha = "",
-                estado = "",
-                subOrDub = "",
-            }) => (
-                <Card
-                    name={title}
-                    urlAnime={id}
-                    urlPerfil={image}
-                    fechaAnime={fecha}
-                    estado={estado}
-                    doblaje={subOrDub}
-                />
+        cards.flatMap((e) =>
+            e.map(
+                ({
+                    title,
+                    id,
+                    image,
+                    releaseDate: fecha,
+                    estado,
+                    subOrDub,
+                }) => (
+                    <Card
+                        name={title}
+                        urlAnime={id}
+                        urlPerfil={image}
+                        fechaAnime={fecha}
+                        estado={estado}
+                        doblaje={subOrDub}
+                    />
+                ),
             ),
         )
     }
 </div>
+<footer class="flex place-content-center space-x-14">
+    <div class="h-40 flex items-center">pra este lugar seria un footer</div>
+    <div class="h-40 flex items-center">pra este lugar seria un footer</div>
+    <div class="h-40 flex items-center">pra este lugar seria un footer</div>
+</footer>

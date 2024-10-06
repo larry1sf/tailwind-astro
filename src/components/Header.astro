@@ -1,5 +1,5 @@
 ---
-import HeaderButton from "./HeaderButton.astro";
+import BtnesMove from "./BtnesMove.astro";
 ---
 
 <header class="max-w-full mx-auto px-4 py-8 lg:pt-10 lg:px-8 font-sans">
@@ -10,32 +10,15 @@ import HeaderButton from "./HeaderButton.astro";
             AnimeVision es para <span> Todos! </span>
         </h1>
         <strong
-            class="text-lg text-slate-300 font-normal max-w-2xl min-w-sm me-5"
-            >Estamos empezando por ende no tenemos mucha variedad en productos
-            pero estamos trabajando para ello, ven y distraete un rato 🌐
+            class="text-xl text-slate-300 font-normal max-w-2xl min-w-sm text-pretty"
+            >He aqui un inicio para ir dando grandes pasos, añadimos cada vez
+            mas de tus animes favoritos!
         </strong>
     </div>
     <div
-        class="text-white text-sm p-4 pb-1 md:p-8 md:pb-1 md:flex-row md:space-x-6 flex flex-col space-y-1 items-center justify-center"
+        class="text-white text-sm m-4 md:mb-5 md:m-10 md:flex-row md:space-x-12 flex flex-col items-center justify-center"
     >
-        <HeaderButton>
-            Mas gustados
-            <span class="px-1 inline-block md:rotate-90" slot="simbol">
-                &#9885;
-            </span>
-        </HeaderButton>
-
-        <HeaderButton>
-            Coleccion completa
-            <span class="inline-block -rotate-90 md:rotate-0" slot="simbol"
-                >&#8595;
-            </span>
-        </HeaderButton>
-        <a
-            role="button"
-            class="text-sm font-semibold px-5 py-2 rounded-md max-w-34 bg-sky-500 border-2 border-sky-500 shadow-lg hover:bg-transparent text-white hover:text-sky-500 duration-300 cursor-pointer active:scale-[0.98]"
-            href="/whatsapp"
-            >Comunicanos &#9742;
-        </a>
+        <BtnesMove>Coleccion</BtnesMove>
+        <BtnesMove ruta="aportes">Aportes</BtnesMove>
     </div>
 </header>

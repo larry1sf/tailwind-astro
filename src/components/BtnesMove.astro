@@ -1,0 +1,14 @@
+---
+interface Props {
+    ruta?: string;
+}
+const { ruta = "" } = Astro.props;
+---
+
+<a
+    role="button"
+    class="text-sm font-semibold px-5 py-2 rounded-md max-w-34 bg-sky-500 border-2 border-sky-500 shadow-lg hover:bg-transparent text-white hover:text-sky-500 duration-300 cursor-pointer active:scale-[0.98]"
+    href={`/${ruta}`}
+>
+    <slot />
+</a>

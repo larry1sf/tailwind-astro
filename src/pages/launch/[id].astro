@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { Counter } from "../../components/Counter";
 import { getLaunById, getAllPeticiones } from "../../services/peticiones";
 import BtnsCaps from "../../components/BtnsCaps.astro";
+import BtnesMove from "../../components/BtnesMove.astro";
 export const prerender = false; //envio al servidos
 
 const { id } = Astro.params;
@@ -158,11 +159,7 @@ const numerosCaps = launch?.episodes.length ?? 3;
             <!-- fin capitulos site-->
             <!-- boton volver & ... -->
             <div class="w-full absolute -bottom-16 flex justify-start">
-                <a
-                    href="/"
-                    class="text-sm font-semibold px-5 py-2 rounded-md max-w-34 bg-sky-500 border-2 border-sky-500 shadow-lg hover:bg-transparent text-white hover:text-sky-500 duration-300 cursor-pointer active:scale-[0.98]"
-                    >Volver</a
-                >
+                <BtnesMove>Volver</BtnesMove>
             </div>
             <!-- fin boton volver & ... -->
         </div>
