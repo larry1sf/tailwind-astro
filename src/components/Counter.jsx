@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 import Servidores from "../svg/Servidores";
 import Send from "../svg/Send";
@@ -22,9 +22,9 @@ export function Counter({ id, imgBgVoid }) {
         const estadoFavorito = localStorage.getItem(`favorito-${id}`)
         if (estadoFavorito) { setFavorito(JSON.parse(estadoFavorito)) }
         const launchCards = await llamado()
+        launchCards.map(e => e = e.title.split("-")[0])
         setNuevosAnimes(launchCards)
         console.log(launchCards);
-
     }, [id])
     // -------------------------------------------------------------------
     const changeFav = (e) => {
@@ -146,7 +146,7 @@ export function Counter({ id, imgBgVoid }) {
                     {
                         nuevosAnimes.map(
                             (e) => <Card
-                                title={e.id}
+                                title={e.title}
                                 url={e.id}
                                 image={e.image}
                             />

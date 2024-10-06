@@ -4,8 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import { Counter } from "../../components/Counter";
 import { getLaunById, getAllPeticiones } from "../../services/peticiones";
 import BtnsCaps from "../../components/BtnsCaps.astro";
+export const prerender = false; //envio al servidos
 
-// export const prerender = false; //envio al servidos
 const { id } = Astro.params;
 let launch = null;
 if (id) {
@@ -39,6 +39,7 @@ const reformatName = (val = "") => {
 };
 
 const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
+const numerosCaps = launch?.episodes.length ?? 3;
 ---
 
 <Layout title={`${id} | anime en linea - AnimeVision`}>
@@ -122,7 +123,7 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                 </div>
                 <div
                     id="scroll-caps"
-                    class="h-[70%] min-w-auto py-4 bg-slate-800 relative rounded-md shadow-xl"
+                    class="min-h-[70%] min-w-auto py-4 bg-slate-800 relative rounded-md shadow-xl"
                 >
                     <div
                         class="h-[20%] flex justify-center items-center relative"
@@ -132,7 +133,13 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
                         >
                     </div>
                     <div
-                        class="h-[80%] flex flex-col items-center gap-3 scroll-smooth overflow-y-auto overflow-x-hidden snap-mandatory snap-y pe-1 me-3"
+                        class:list={[
+                            "h-[80%] flex flex-col items-center gap-3 scroll-smooth overflow-y-auto overflow-x-hidden snap-mandatory snap-y pe-1 me-3",
+                            ,
+                            {
+                                "justify-center": numerosCaps <= 2,
+                            },
+                        ]}
                     >
                         {
                             launch?.episodes.map((episode) => (
@@ -212,9 +219,7 @@ const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
             scale: 1;
         }
     }
-    * {
-        user-select: none;
-    }
+
     @keyframes fade-in {
         0% {
             opacity: 0.2;

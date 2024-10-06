@@ -6,8 +6,8 @@ import preact from '@astrojs/preact';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), preact()],
-  // output:"hybrid",
-  // adapter:vercelServerless({
-  //   edgeMiddleware:true
-  // })
+  output:"hybrid",
+  adapter:vercelServerless({
+    edgeMiddleware:true
+  })
 });
