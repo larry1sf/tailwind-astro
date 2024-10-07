@@ -3,7 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 import Servidores from "../svg/Servidores";
 import Send from "../svg/Send";
 import { getmoreAnimes } from "../services/peticiones";
-export function Counter({ id, imgBgVoid }) {
+export function Counter({ id, imgBgVoid, changeTamaño }) {
     const [favorito, setFavorito] = useState(false)
     const [vistaNotas, setVistaNotas] = useState(false)
     const [items, setItems] = useState([])
@@ -77,9 +77,10 @@ export function Counter({ id, imgBgVoid }) {
     }
     // ------------------------------------------------------------------- notas
     function Notas() {
+        const qrLabelNotas = changeTamaño ? "h-full" : "h-[calc(1.75rem+1px)]"
         return (
             <>
-                <ul id="scroll-notas" class="absolute top-0 right-0 w-[82%] h-[80%] overflow-y-auto overflow-x-hidden text-right z-20 leading-loose flex flex-col items-end">
+                <ul id="scroll-notas" class="absolute top-0 right-0 w-[82%] min-h-[80%] overflow-y-auto overflow-x-hidden text-right z-20 leading-loose flex flex-col items-end">
                     {
                         items.map((item, index) => (
                             <li
@@ -90,33 +91,32 @@ export function Counter({ id, imgBgVoid }) {
                     }
                 </ul>
 
-                <div class={`w-full h-[20%] self-end z-10 `}>
+                <div class={`absolute bottom-0 w-[82%] h-[20%] self-end z-10 fade`}>
 
-                    <div class="w-full h-full flex fade">
-                        <label htmlFor="nota-aportiva" class="w-full h-full flex items-center">
-                            <input
-                                class="w-full px-2 h-full text-sm bg-slate-200/10 dark:text-white border border-slate-600/30 placeholder:text-sm placeholder:font-normal placeholder:text-slate-300 focus:outline-none focus:border-gray-50 focus:ring-1 focus:rounded-sm"
-                                id="nota-aportiva"
-                                type="text"
-                                maxLength="100"
-                                placeholder="Voy en el cap..." />
-                            <button
-                                class="w-[20%] h-full border border-slate-600"
-                                type="button"
-                            >
-                                <span class="send h-full text-xl border-transparent flex items-center justify-center">
-                                    <Send />
-                                </span>
-                            </button>
-                        </label>
 
-                    </div>
+                    <label htmlFor="nota-aportiva" class="w-full h-full flex items-center">
+                        <input
+                            class={`w-full px-2 ${qrLabelNotas} text-sm bg-slate-200/10 dark:text-white border border-slate-600/30 placeholder:text-sm placeholder:font-normal placeholder:text-slate-300 focus:outline-none focus:border-gray-50 focus:ring-1 focus:rounded-sm`}
+                            id="nota-aportiva"
+                            type="text"
+                            maxLength="100"
+                            placeholder="Voy en el cap..." />
+                        <button
+                            class="w-[20%] h-full border border-slate-600"
+                            type="button"
+                        >
+                            <span class="send h-full text-xl border-transparent flex items-center justify-center">
+                                <Send />
+                            </span>
+                        </button>
+                    </label>
+
                 </div >
             </>
         )
     }
     function MAnimes() {
-
+        const changeHCounter = !changeTamaño ? "max-h-28" : ""
         function Card({ title = null ?? "Titulo del anime", estado = null ?? "estado", image = null ?? imgBgVoid, url = null ?? "ruta sin identificar" }) {
             return (
                 <a
@@ -142,7 +142,7 @@ export function Counter({ id, imgBgVoid }) {
         return (
             <div class="w-full flex flex-col">
                 <div class="h-[20%] w-full text-2xl font-bold"> <h3> Otros animes </h3></div>
-                <div class="overflow-y-auto snap-y snap-mandatory h-[80%] flex flex-col gap-3">
+                <div class={`overflow-y-auto snap-y snap-mandatory h-[80%] ${changeHCounter} flex flex-col gap-3`}>
                     {
                         nuevosAnimes.map(
                             (e) => <Card
@@ -195,7 +195,7 @@ export function Counter({ id, imgBgVoid }) {
                         trash>🗑</Btns>
 
                 </div>
-                <div className={`w-[90%] h-full flex ${qrBgTablero} `}>
+                <div className={`w-[90%]  flex ${qrBgTablero} `}>
 
                     {qrView}
                 </div>
