@@ -195,7 +195,7 @@ export function Counter({ id, imgBgVoid }) {
                         trash>🗑</Btns>
 
                 </div>
-                <div className={`w-[90%] h-48 flex ${qrBgTablero} `}>
+                <div className={`w-[90%] h-full flex ${qrBgTablero} `}>
 
                     {qrView}
                 </div>
