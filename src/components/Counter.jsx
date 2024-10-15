@@ -77,7 +77,6 @@ export function Counter({ id, imgBgVoid, changeTamaño }) {
     }
     // ------------------------------------------------------------------- notas
     function Notas() {
-        const qrLabelNotas = changeTamaño ? "h-full" : "h-[calc(1.75rem+1px)]"
         return (
             <>
                 <ul id="scroll-notas" class="absolute top-0 right-0 w-[82%] min-h-[80%] overflow-y-auto overflow-x-hidden text-right z-20 leading-loose flex flex-col items-end">
@@ -96,7 +95,7 @@ export function Counter({ id, imgBgVoid, changeTamaño }) {
 
                     <label htmlFor="nota-aportiva" class="w-full h-full flex items-center">
                         <input
-                            class={`w-full px-2 ${qrLabelNotas} text-sm bg-slate-200/10 dark:text-white border border-slate-600/30 placeholder:text-sm placeholder:font-normal placeholder:text-slate-300 focus:outline-none focus:border-gray-50 focus:ring-1 focus:rounded-sm`}
+                            class={`w-full px-2 h-full text-sm bg-slate-200/10 dark:text-white border border-slate-600/30 placeholder:text-sm placeholder:font-normal placeholder:text-slate-300 focus:outline-none focus:border-gray-50 focus:ring-1 focus:rounded-sm`}
                             id="nota-aportiva"
                             type="text"
                             maxLength="100"
@@ -116,19 +115,19 @@ export function Counter({ id, imgBgVoid, changeTamaño }) {
         )
     }
     function MAnimes() {
-        const changeHCounter = !changeTamaño ? "max-h-28" : ""
+        // const changeHCounter = !changeTamaño ? "max-h-28" : ""
         function Card({ title = null ?? "Titulo del anime", estado = null ?? "estado", image = null ?? imgBgVoid, url = null ?? "ruta sin identificar" }) {
             return (
                 <a
                     href={url}
-                    class="flex group cursor-pointer bg-[#3f40429a] p-[6px] rounded-md me-[4px]">
+                    class="flex group cursor-pointer bg-[#3f40429a] p-[6px] min-h-16 rounded-md me-[4px]">
                     <div class="grow-0 flex items-center">
                         <img src={image} alt={id} height="35" width="35" class="rounded-md text-xs" />
                     </div>
 
                     <div class="flex flex-col justify-between flex-grow text-sm pb-1">
                         <h4 class="w-36 text-sm font-medium group-hover:text-slate-300" >{title}</h4>
-                        <div class="flex justify-end pe-5 text-xs font-normal">
+                        <div class="flex justify-end pe-5 text-xs leading-[.6rem] font-normal">
                             <span class="bg-green-400 rounded-lg px-1 py-[2px] text-slate-50 group-hover:text-slate-300">{estado}</span></div>
                     </div>
 
@@ -140,9 +139,11 @@ export function Counter({ id, imgBgVoid, changeTamaño }) {
         }
 
         return (
-            <div class="w-full flex flex-col">
-                <div class="h-[20%] w-full text-2xl font-bold"> <h3> Otros animes </h3></div>
-                <div class={`overflow-y-auto snap-y snap-mandatory h-[80%] ${changeHCounter} flex flex-col gap-3`}>
+            <div class="w-full flex justify-between flex-col">
+                <div class="h-[20%] w-full text-2xl font-bold mb-2">
+                    <h3 class=""> Otros animes </h3>
+                </div>
+                <div class={`overflow-y-auto snap-y snap-mandatory h-[80%] flex flex-col gap-3`}>
                     {
                         nuevosAnimes.map(
                             (e) => <Card
@@ -165,7 +166,7 @@ export function Counter({ id, imgBgVoid, changeTamaño }) {
     const qrBgTablero = vistaMA || vistaNotas ? "" : ` bg-[url('/svg/favicon.svg')]  bg-no-repeat bg-contain bg-center blur-sm transition-none transition-transform hover:scale-105 hover:transition-transform`
     return (
         <>
-            <div class="min-w-full h-full gap-2 flex relative">
+            <div class="min-w-full sm:h-full h-36 gap-2 flex relative">
                 <div class="w-[20%] basis-1/6 flex flex-col justify-between items-center">
 
                     <input
@@ -195,7 +196,7 @@ export function Counter({ id, imgBgVoid, changeTamaño }) {
                         trash>🗑</Btns>
 
                 </div>
-                <div className={`w-[90%]  flex ${qrBgTablero} `}>
+                <div className={`w-[90%] flex ${qrBgTablero} `}>
 
                     {qrView}
                 </div>
