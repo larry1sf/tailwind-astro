@@ -3,7 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 import Servidores from "../svg/Servidores";
 import Send from "../svg/Send";
 import { getmoreAnimes } from "../services/peticiones";
-export function Counter({ id, imgBgVoid, changeTamaño }) {
+export function Counter({ id, imgBgVoid }) {
     const [favorito, setFavorito] = useState(false)
     const [vistaNotas, setVistaNotas] = useState(false)
     const [items, setItems] = useState([])
