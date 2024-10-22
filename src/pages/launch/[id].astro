@@ -5,7 +5,7 @@ import { Counter } from "../../components/Counter";
 import { getLaunById, getAllPeticiones } from "../../services/peticiones";
 import BtnsCaps from "../../components/BtnsCaps.astro";
 import BtnesMove from "../../components/BtnesMove.astro";
-export const prerender = false; //envio al servidos
+export const prerender = false; //envio al servidor
 
 const { id } = Astro.params;
 let launch = null;
@@ -40,39 +40,28 @@ const reformatName = (val = "") => {
 };
 
 const qrEstado = launch?.status === "Completed" ? "Completado" : "En curso";
+
 const numerosCaps = launch?.episodes.length ?? 3;
 const tamañoDescription = launch?.description.length ?? 30;
-
-const qrCambioPorTexto = tamañoDescription <= 50 ? true : false;
-const qrCambioTextCorto =
-    tamañoDescription >= 220 && tamañoDescription <= 310 ? true : false;
-const qrMedioLargo =
-    tamañoDescription >= 310 && tamañoDescription <= 600 ? true : false;
-const qrCambioLargo = tamañoDescription > 600 ? true : false;
+const sinDesc = tamañoDescription === 0;
+const descPequeña = tamañoDescription < 40;
+const descLarga = tamañoDescription >= 200;
 ---
 
 <Layout title={`${id} | anime en linea - AnimeVision`}>
     <article>
         <div
             class:list={[
-                "grid gap-y-0 grid-flow-row grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 place-items-center",
-                {
-                    "lg:grid-cols-5": qrCambioPorTexto,
-                },
+                "grid gap-y-0 grid-flow-row grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 place-items-center",
+                {},
             ]}
         >
             <Image
                 class:list={[
-                    "rounded-xl shadow-xl",
+                    "rounded-xl shadow-xl col-start-1 row-start-2 sm:row-start-1 sm:row-span-2	 lg:col-span-2",
                     {
-                        " h-[17rem] col-span-1 sm:col-span-2 row-start-1 col-start-1 sm:mb-4 mb-0 md:mb-0":
-                            qrCambioPorTexto,
-                        "col-start-1 row-start-1 col-span-1 row-span-1 md:row-span-3 md:col-span-2":
-                            qrCambioTextCorto,
-                        "sm:mb-8 w-full h-[75%] sm:row-start-1 sm:col-span-2 sm:row-span-2 ":
-                            qrMedioLargo,
-                        "h-[80%] w-full sm:row-start-1 sm:col-span-2 sm:row-span-2":
-                            qrCambioLargo,
+                        "my-0 md:my-6 lg:my-8":
+                            tamañoDescription > 800 && tamañoDescription < 1000,
                     },
                 ]}
                 src={launch?.image ?? ""}
@@ -82,47 +71,29 @@ const qrCambioLargo = tamañoDescription > 600 ? true : false;
                 width={200}
                 loading="eager"
             />
-
+            <!-- titulo -->
             <h2
                 class:list={[
-                    "text-2xl text-center py-6 px-2 font-semibold sm:row-start-1",
-                    ,
-                    {
-                        " sm:col-span-4 sm:col-start-3 sm:-translate-y-28 row-start-2":
-                            qrCambioPorTexto,
-                        "md:col-start-3 md:col-span-4 sm:row-start-1 sm:col-start-2 sm:col-span-2":
-                            qrCambioTextCorto,
-                        "sm:col-span-4 sm:col-start-3 md:self-baseline translate-y-16":
-                            qrMedioLargo,
-                        "sm:col-span-4 sm:row-span-1 sm:col-start-3 self-start flex items-center lg:h-28 h-full sm:translate-y-12":
-                            qrCambioLargo,
-                    },
+                    "text-2xl text-center py-4 px-2 font-semibold col-span-2 md:col-span-3 row-start-1 lg:col-start-3 lg:col-span-4",
+                    {},
                 ]}
             >
                 {launch?.title}
             </h2>
-
+            <!-- atributos -->
             <div
                 class:list={[
-                    "m-2 text-center text-[14px] grid place-content-center  gap-x-4 gap-y-2 justify-items-center md:text-[15px]",
+                    "m-2 text-center text-sm md:text-[15px] row-start-2 lg:row-start-2 grid place-content-center gap-x-4 gap-y-2 ",
                     {
-                        " sm:my-12 sm:col-span-4 md:grid-cols-2 sm:grid-cols-1 sm:max-w-xl lg:max-w-3xl sm:row-start-1 sm:col-start-3 md:translate-y-8 sm:translate-y-[5.5rem]":
-                            qrCambioPorTexto,
-                        "md:col-start-3 md:row-start-2 md:col-span-4 md:grid-cols-2 md:grid-flow-row place-items-center lg:w-full md:w-full sm:row-start-2 sm:col-span-1":
-                            qrCambioTextCorto,
-                        "lg:grid-flow-col lg:grid-rows-2 lg:col-span-4 sm:col-start-3 sm:col-span-2 sm:text-xs sm:grid sm:grid-cols-2 sm:grid-flow-row sm:space-y-1 grid grid-cols-3 h-52 mb-4":
-                            qrMedioLargo,
-                        " m-6 md:mt-0 lg:mt-6 sm:self-start sm:col-span-6 sm:row-start-3 sm:row-span-1 sm:col-start-1 sm:grid-flow-col sm:grid-rows-2 h-auto":
-                            qrCambioLargo,
+                        "md:grid-flow-col md:grid-rows-2 justify-items-center col-span-2 md:col-span-3  lg:col-span-4 lg:col-start-3  ":
+                            descLarga,
+                        "grid-flow-row grid-cols-1 sm:grid-cols-2 col-span-2 md:col-span-3 lg:col-span-4 lg:col-start-3  ":
+                            sinDesc,
+                        "md:col-span-2 col-start-1 w-full": descPequeña,
                     },
                 ]}
             >
-                <b
-                    class:list={[
-                        "text-center font-medium ",
-                        { "md:row-start-3": qrCambioTextCorto },
-                    ]}
-                >
+                <b class:list={["text-center font-medium ", {}]}>
                     Genero: <span class="font-normal"> {qrGeneros}</span>
                 </b>
                 <b class="font-medium"
@@ -148,42 +119,17 @@ const qrCambioLargo = tamañoDescription > 600 ? true : false;
                         {launch?.subOrDub}</span
                     >
                 </b>
-
-                {
-                    qrCambioPorTexto ? (
-                        <p
-                            class:list={[
-                                "text-lg text-center ",
-                                {
-                                    "sm:col-span-1 md:col-span-2 row-start-1 md:row-start-5 sm:row-start-7 md:w-full md:-translate-x-0 md:-translate-y-0 sm:w-[200%] sm:-translate-x-[80%] sm:-translate-y-[2.1rem]":
-                                        qrCambioPorTexto,
-                                    "h-[47vh]": qrCambioLargo,
-                                    "sm:col-span-3": qrCambioTextCorto,
-                                },
-                            ]}
-                        >
-                            {launch?.description}
-                        </p>
-                    ) : (
-                        ""
-                    )
-                }
             </div>
-
+            <!-- cambio de opciones -->
             <div
                 class:list={[
-                    "flex w-full sm:flex-row flex-col text-center text-3xl font-medium py-6 relative",
-                    {
-                        "flex-col col-span-1 sm:col-span-3 md:col-span-6 ":
-                            qrCambioPorTexto,
-
-                        "sm:flex-row sm:justify-center sm:gap-4 sm:row-span-1 sm:col-span-6 sm:col-start-1 sm:row-start-4":
-                            !qrCambioPorTexto,
-                    },
+                    "flex w-full sm:flex-row flex-col text-center text-3xl font-medium py-7 relative gap-y-12 sm:gap-y-0 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-6",
+                    { "row-start-3": sinDesc, "row-start-4": descLarga },
                 ]}
             >
+                <!-- opciones-->
                 <div
-                    class="h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2"
+                    class="h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2 order-2 sm:order-1"
                 >
                     <div class="h-16 mb-2">
                         <h2 class="pb-2">Tablero de Opciones</h2>
@@ -192,19 +138,18 @@ const qrCambioLargo = tamañoDescription > 600 ? true : false;
                         class="sm:min-h-56 max-h-48 min-w-[calc(20rem+4px)] bg-slate-800 relative rounded-md p-4 shadow-xl"
                     >
                         <Counter
-                            changeTamaño={qrCambioPorTexto}
                             imgBgVoid={launch?.image}
-                            client:load
+                            client:visible
                             id={id}
                         />
                     </div>
                 </div>
                 <!-- capitulos site -->
                 <div
-                    class="h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2"
+                    class="h-80 basis-full md:basis-6/12 flex flex-col items-center gap-2 order-1 sm:order-2"
                 >
                     <div class="mb-2 h-16">
-                        <h3 class="pb-2">Capitulos</h3>
+                        <h2 class="pb-2">Capitulos</h2>
                     </div>
                     <div
                         id="scroll-caps"
@@ -243,108 +188,93 @@ const qrCambioLargo = tamañoDescription > 600 ? true : false;
                         </div>
                     </div>
                 </div>
-                <!-- fin capitulos site-->
             </div>
-
-            {
-                !qrCambioPorTexto ? (
-                    <p
-                        class:list={[
-                            "text-lg text-center p-8 ",
-                            {
-                                "col-span-2 mb-4 row-start-1 sm:mt-4 sm:row-start-4":
-                                    qrCambioPorTexto,
-
-                                "lg:col-span-4 lg:col-start-3 lg:row-start-3 md:col-span-2 md:row-start-3 md:col-start-3 sm:col-start-2 sm:col-span-2 sm:row-start-2 row-start-3 py-2":
-                                    qrCambioTextCorto,
-
-                                "md:translate-y-12 md:row-start-1 md:col-start-3 md:col-span-4 sm:row-start-3 sm:col-span-3 row-start-4 h-[30rem] flex items-center":
-                                    qrMedioLargo,
-
-                                "sm:row-start-2 sm:col-span-4 sm:col-start-3 row-start-3 lg:h-[31rem] h-full flex items-center":
-                                    qrCambioLargo,
-                            },
-                        ]}
-                    >
-                        {launch?.description}
-                    </p>
-                ) : (
-                    ""
-                )
-            }
+            <!-- descripcion -->
+            <p
+                class:list={[
+                    "text-lg text-center p-7 h-[40vh] flex items-center",
+                    {
+                        "col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-6 row-start-3":
+                            descLarga,
+                        " row-start-2 col-start-5 lg:col-span-2": descPequeña,
+                    },
+                ]}
+            >
+                {launch?.description}
+            </p>
+            <!-- boton de volver -->
             <div
                 class:list={[
-                    "max-w-sm max-h-10 flex ",
-                    {
-                        "row-start-5 relative top-10": qrCambioPorTexto,
-                        "sm:row-start-5": !qrCambioPorTexto,
-                    },
+                    "max-w-sm max-h-10 row-start-5 flex justify-self-start",
+                    {},
                 ]}
             >
                 <BtnesMove>Volver</BtnesMove>
             </div>
         </div>
     </article>
+
     <!-- <article class="py-8"></article> -->
+
+    <style is:global>
+        *::-webkit-scrollbar-track {
+            border-top-right-radius: 50vw 50vw;
+            border-bottom-right-radius: 50vw 50vw;
+        }
+
+        #favorito:checked + .fav {
+            color: red;
+            transition: 0.15s;
+            animation: open-favorito 0.15s ease-in-out both alternate;
+        }
+        #favorito:not(:checked) + .fav {
+            color: whitesmoke;
+            animation: noopen-favorito 0.15s ease-in-out;
+            transition: 0.25s;
+        }
+
+        #scroll-notas::-webkit-scrollbar-track {
+            border-bottom-right-radius: 0;
+        }
+        .send:active {
+            animation: open-favorito 0.15s ease-in-out;
+        }
+        .fade {
+            animation: fade-in 150ms ease;
+        }
+        .scrolear::-webkit-scrollbar-track-piece {
+            scroll-inline-margin: 10px 0;
+        }
+        @keyframes noopen-favorito {
+            0% {
+                scale: 1;
+            }
+            40% {
+                scale: 0.85;
+            }
+            100% {
+                scale: 1;
+            }
+        }
+        @keyframes open-favorito {
+            0% {
+                scale: 1;
+            }
+            40% {
+                scale: 0.85;
+            }
+            100% {
+                scale: 1;
+            }
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
 </Layout>
-<style is:global>
-    *::-webkit-scrollbar-track {
-        border-top-right-radius: 50vw 50vw;
-        border-bottom-right-radius: 50vw 50vw;
-    }
-
-    #favorito:checked + .fav {
-        color: red;
-        transition: 0.15s;
-        animation: open-favorito 0.15s ease-in-out both alternate;
-    }
-    #favorito:not(:checked) + .fav {
-        color: whitesmoke;
-        animation: noopen-favorito 0.15s ease-in-out;
-        transition: 0.25s;
-    }
-
-    #scroll-notas::-webkit-scrollbar-track {
-        border-bottom-right-radius: 0;
-    }
-    .send:active {
-        animation: open-favorito 0.15s ease-in-out;
-    }
-    .fade {
-        animation: fade-in 150ms ease;
-    }
-    .scrolear::-webkit-scrollbar-track-piece {
-        scroll-inline-margin: 10px 0;
-    }
-    @keyframes noopen-favorito {
-        0% {
-            scale: 1;
-        }
-        40% {
-            scale: 0.85;
-        }
-        100% {
-            scale: 1;
-        }
-    }
-    @keyframes open-favorito {
-        0% {
-            scale: 1;
-        }
-        40% {
-            scale: 0.85;
-        }
-        100% {
-            scale: 1;
-        }
-    }
-
-    @keyframes fade-in {
-        0% {
-            opacity: 0.2;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-</style>
