@@ -23,8 +23,8 @@ export function Counter({ id, imgBgVoid }) {
         if (estadoFavorito) { setFavorito(JSON.parse(estadoFavorito)) }
         const launchCards = await llamado()
         launchCards.map(e => e = e.title.split("-")[0])
-        setNuevosAnimes(launchCards)
         console.log(launchCards);
+        setNuevosAnimes(launchCards)
     }, [id])
     // -------------------------------------------------------------------
     const changeFav = (e) => {
