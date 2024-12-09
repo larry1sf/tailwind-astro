@@ -1,8 +1,10 @@
 ---
-import Launches from "../components/Launches.astro";
-import Layout from "../layouts/Layout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
+import Launches from "@/components/Launches.astro";
 ---
 
-<Layout title="AnimeVision">
-	<Launches />
-</Layout>
+<BaseLayout title="Presentación inicial">
+    <Header />
+    <Launches />
+</BaseLayout>

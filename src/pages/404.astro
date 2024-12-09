@@ -1,35 +1,8 @@
 ---
-import Image from "astro/components/Image.astro";
-import Layout from "../layouts/Layout.astro";
-import svgNotFound from "../../public/img/not-found.webp";
-// import Card from "../components/Card.astro";
-// import { getAllPeticiones } from "../services/peticiones";
-// const cards = await getAllPeticiones(["mono", "su"]);
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
 ---
 
-<Layout title="not found - 404">
-    <h2 class="text-2xl font-medium text-center mx-auto">
-        No tuvimos Resultados!
-    </h2>
-    <Image
-        class="mx-auto my-8 rounded-lg"
-        height={400}
-        width={400}
-        loading="eager"
-        src={svgNotFound}
-        alt="El resultado no se encontro"
-    />
-    <div class="flex justify-center">
-        <div class="w-44 active:scale-105">
-            <a
-                class="w-full block text-center text-9 font-medium p-1 px-2 rounded-md border-2 border-sky-500 bg-sky-500 hover:bg-transparent active:bg-sky-700"
-                href="/"
-                title="Volver a la pagina de inicio"
-                aria-label="Volver a la pagina de inicio">Ir al Inicio</a
-            >
-        </div>
-    </div>
-    <div class="pt-6 mx-auto">
-        <!-- <Launches title="Otras opciones" /> -->
-    </div>
-</Layout>
+<BaseLayout title="Pagina no encontrada">
+    <Header />
+</BaseLayout>

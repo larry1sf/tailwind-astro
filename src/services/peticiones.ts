@@ -1,44 +1,27 @@
-import { ANIME } from "@consumet/extensions";
-import {type ResApiInfoAnimes, type resApiAnimes } from "../types/resApiAnimes";
-const proveedor = new ANIME.Gogoanime();
-
-export const getLaunById = async ({id}:{id:string}) => {
-    const {results:datos} = await proveedor.search(id) as resApiAnimes
-    const {...ddt} = await proveedor.fetchAnimeInfo(datos[0].id) as ResApiInfoAnimes    
-    return {ddt,datos}
-};
+// import { ANIME } from "@consumet/extensions";
+// import { type RecienteSearch, type AnimeInfo } from "@/types/types";
 
 
+// const gogo = new ANIME.Gogoanime();
 
-export const getmoreAnimes = async ({id}:{id:string}) =>{
-    
-    const {datos:epi} = await getLaunById({id})
-    return epi
-}
+// export async function SimpleSearch(id?: string) {
+//     try {
+//         const data = await gogo.fetchAnimeInfo(id ?? "momo")
+//         return data
+//     } catch (error) {
+//         return new Error(`Salio un Error! ${error}`)
+//     }
+// }
 
-
-// peticion por cara elemento en array de animes.
-export const getAllPeticiones = async (p=[""]) => {
-const data = async (busqueda = "") => {
-    const primerResult = await getLaunById({id:busqueda})
-    const updatedResult = await Promise.all(
-        primerResult.datos.map(async (item) => {
-            const { status: estados, releaseDate } =
-                await proveedor.fetchAnimeInfo(item.id);
-            return { ...item, estado: estados, releaseDate };
-        }),
-    );
-    return updatedResult;
-};
-
-// repitiendo por aca posicion para hacer mas facil la implementacion de mas animes.
-const UAll = async (llamadas = [""]) => {
-    return await Promise.all(
-        llamadas.map(async (llamada = "") => {
-            return await data(llamada);
-        }),
-    );
-};
-
-return UAll(p)
-}
+// export async function RecinteSearch(id?: string) {
+//     try {
+//         const data = await gogo.fetchRecentEpisodes() as RecienteSearch
+//         const promises = data.results.map(async e => {
+//             return (await gogo.fetchAnimeInfo(e.id)) as AnimeInfo
+//         })
+//         return await Promise.all(promises)
+//     }
+//     catch (ex) {
+//         return new Error("algo salio mal!" + ex);
+//     }
+// }

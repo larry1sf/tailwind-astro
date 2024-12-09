@@ -1,0 +1,94 @@
+---
+import { Icon } from "astro-icon/components";
+interface Props {
+    texto: string;
+    op1?: string;
+    op2?: string;
+    op3?: string;
+    op4?: string;
+}
+const { texto, op1, op2, op3, op4 } = Astro.props;
+
+const id = texto.toLocaleLowerCase();
+
+const reformarUrl = (name: string | undefined): string => {
+    if (name) {
+        return name.toLowerCase().split(" ").join("-");
+    }
+    return "404";
+};
+---
+
+<li>
+    <input type="checkbox" id={id} class="menu-toggle" />
+    <label class="justify-between menu-item" for={id}>
+        <div class="flex gap-2">
+            <slot name="svg-option">
+                <Icon name="j" size={24} />
+            </slot>
+            <span>{texto ?? "Filtros"}</span>
+        </div>
+
+        <span class="menu-icon">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+                <style></style>
+            </svg>
+        </span>
+    </label>
+
+    <div class="menu-item-collapse">
+        <div class="min-h-0">
+            <label for={id}>
+                <a
+                    class="ml-6 menu-item"
+                    href={reformarUrl(op1) ?? "mas-populares"}
+                >
+                    <slot name="svg-op1" />
+                    {op1 ?? "Mas populares"}
+                </a>
+            </label>
+            <label for={id}>
+                <a
+                    class="ml-6 menu-item"
+                    href={reformarUrl(op2) ?? "favoritos-de-la-comunidad"}
+                >
+                    <slot name="svg-op2" />
+                    {op2 ?? "Favoritos de la comunidad"}
+                </a>
+            </label>
+            <label for={id}>
+                <a
+                    class="ml-6 menu-item"
+                    href={reformarUrl(op3) ?? "animes-finalizados"}
+                >
+                    <slot name="svg-op3" />
+                    {op3 ?? "Animes finalizados"}
+                </a>
+            </label>
+            <label for={id}>
+                <a
+                    class="ml-6 menu-item"
+                    href={reformarUrl(op4) ?? "animes-recien-añadios"}
+                >
+                    <slot name="svg-op4" />
+                    {op4 ?? "Animes Recien añadidos"}
+                </a>
+            </label>
+        </div>
+    </div>
+</li>
+
+<style>
+    .min-h-0 label a {
+        text-transform: capitalize;
+    }
+</style>

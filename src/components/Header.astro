@@ -1,24 +1,28 @@
 ---
-import BtnesMove from "./BtnesMove.astro";
+const labelInicio = "Inicia Sesión Con Nosotros";
+
+console.log(labelInicio);
 ---
 
-<header class="max-w-full mx-auto px-4 py-8 lg:pt-10 lg:px-8 font-sans">
-    <div class="flex items-center flex-col text-white space-y-7">
+<section class="flex justify-end py-2 pe-4 bg-[#E5EBEB]">
+    <a
+        class="px-8 py-1 text-lg font-medium underline transition scale-100 hover:text-gray-500 duration-50 dark:text-black underline-offset-2 decoration-2 active:scale-95"
+        href="login"
+        aria-label={labelInicio}
+        title={labelInicio}>Iniciar Sesión</a
+    >
+</section>
+<header class="min-w-full px-4 py-8 mx-auto font-sans lg:pt-10 lg:px-8">
+    <div class="flex flex-col items-center text-white space-y-7">
         <h1
-            class="text-6xl font-bold text-center pb-2 relative bg-clip-text text-transparent bg-gradient-to-tr from-cyan-500 to-sky-300"
+            class="relative px-2 text-5xl font-black text-center text-transparent scale-95 md:scale-100 md:text-6xl bg-clip-text bg-gradient-to-tr from-cyan-500 to-sky-300"
         >
-            AnimeVLa es para <span> Todos! </span>
+            AnimeVisionLatina es para <span> Todos! </span>
         </h1>
         <strong
-            class="text-xl text-slate-300 font-normal max-w-2xl min-w-sm text-pretty"
-            >He aqui un inicio para ir dando grandes pasos, añadimos cada vez
-            mas de tus animes favoritos!
+            class="max-w-4xl text-lg font-medium text-center text-slate-300 min-w-sm"
+            >Es aqui un pedazo de mi donde podran pasarla bien y distraerse un
+            rato con su entretenimiento favorito!
         </strong>
-    </div>
-    <div
-        class="text-white text-sm m-4 space-y-6 md:mb-5 md:m-10 md:flex-row md:space-y-0 md:space-x-12 flex flex-col items-center justify-center"
-    >
-        <BtnesMove>Coleccion</BtnesMove>
-        <BtnesMove ruta="aportes">Aportes</BtnesMove>
     </div>
 </header>

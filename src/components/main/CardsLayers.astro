@@ -1,0 +1,75 @@
+---
+import type { Title } from "@/types/typadoAnimeList";
+
+interface Props {
+    margin?: Boolean;
+    id: number;
+    title: Title | string;
+    tags: string[];
+    status: "FINISHED" | "RELEASING";
+    bannerImage: string;
+    coverImage: string;
+    description: string;
+}
+
+const {
+    margin = false,
+    id = "sin id",
+    title,
+    coverImage = "/favicon.svg",
+    bannerImage = "/favicon.svg",
+    tags = "",
+    description = "",
+    status = "",
+} = Astro.props;
+
+const tfRutes = title
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[!\,\.\:]|[-]/g, "")
+    .replace(/\s+/g, "-");
+---
+
+<section class:list={["  h-56", { "mt-2": margin }]}>
+    <a href={tfRutes} class="flex h-full relative">
+        <img
+            loading="lazy"
+            src={bannerImage ?? coverImage}
+            alt={`${id}`}
+            height={200}
+            width={200}
+            title={`${tfRutes}`}
+            aria-label={tfRutes}
+            class="blur-3xl opacity-30 absolute size-full"
+        />
+        <div class="mx-2 shadow-lg">
+            <img
+                loading="lazy"
+                src={coverImage}
+                alt={`${id}`}
+                height={150}
+                width={150}
+                title={tfRutes}
+                aria-label={`${tfRutes}`}
+                class="h-full min-w-36"
+            />
+        </div>
+
+        <div class="block px-2 text-base font-semibold basis-4/6 space-y-4">
+            <h3 class="text-2xl text-center font-semibold">
+                {title}
+            </h3>
+            <div class="space-y-2">
+                <strong class="font-extrabold">~ {tags} ~</strong>
+                <p>{description}</p>
+            </div>
+        </div>
+
+        <div class="space-y-2 basis-1/6 flex items-center">
+            <div class="text-base px-4 py-2 bg-gray-3 rounded-sm shadow-xl">
+                {status}
+            </div>
+        </div>
+    </a>
+</section>

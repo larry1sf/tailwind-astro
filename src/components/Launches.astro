@@ -1,48 +1,30 @@
 ---
-import Card from "./Card.astro";
-import { getAllPeticiones } from "../services/peticiones";
+// interface Props = {
 
-interface Props {
-    title?: string;
-}
-const { title = "Ultimos animes añadidos" } = Astro.props;
-const cards = await getAllPeticiones([
-    "kaiju-8",
-    "jujutsu-kaisen",
-    "bleach",
-    "tokyo-revenge",
-    "one-piece",
-]);
+// }const {}=Astro.props
+import NavMenu from "./main/NavMenu.astro";
+import CardsLayers from "./main/CardsLayers.astro";
+import { dd } from "@/services/AniList";
+import { undefined } from "astro:schema";
+const result = await dd(); // Espera a que dd() retorne los datos procesados
+// console.log(result); // Aquí puedes manejar los datos
 ---
 
-<div class="mx-auto max-w-sm">
-    <h1 class="text-4xl font-sans font-medium px-auto text-center">{title}</h1>
-</div>
-
-<div
-    class="grid grid-cols-1 my-10 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-0 gap-y-6"
->
-    {
-        cards.flatMap((e) =>
-            e.map(
-                ({
-                    title,
-                    id,
-                    image,
-                    releaseDate: fecha,
-                    estado,
-                    subOrDub,
-                }) => (
-                    <Card
-                        name={title}
-                        urlAnime={id}
-                        urlPerfil={image}
-                        fechaAnime={fecha}
-                        estado={estado}
-                        doblaje={subOrDub}
-                    />
-                ),
-            ),
-        )
-    }
-</div>
+<main class="md:flex block px-12 md:space-x-2">
+    <NavMenu />
+    <div class="basis-3/5 space-y-2 bg-gray-6 py-5">
+        {
+            result.map((e) => (
+                <CardsLayers
+                    id={e.id}
+                    title={e.title}
+                    tags={e.tags}
+                    status={e.status}
+                    bannerImage={e.img}
+                    coverImage={e.imgFondo}
+                    description={e?.description}
+                />
+            ))
+        }
+    </div>
+</main>

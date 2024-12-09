@@ -1,5 +1,6 @@
 ---
-import Header from "../components/Header.astro";
+// Supports weights 100-900
+import '@fontsource-variable/dm-sans';
 import { ViewTransitions } from "astro:transitions";
 interface Props {
 	title: string;
@@ -9,29 +10,38 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="keywords" content="mecheras" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+		<title>{title} - Anime visión latina</title>
+
+		<!-- OG: -->
+		 <meta name="og:title" content="">
+		 <meta name="og:type" content="">
+		 <meta name="og:url" content="">
+		 <meta name="og:image" content="">
+		 <meta name="og:alt" content="">
+		<!-- TW: -->
+ 		 <meta name="twitter:site" content="AnimeVisiónLatina">
+		 <meta name="twitter:site:id" content="0">
+		 <meta name="twitter:creator" content="larry">
+		 <meta name="twitter:creator:id" content="0">
+
 		<ViewTransitions />
 	</head>
-	<body class="bg-gray-900 min-h-screen pb-20">
-		<Header />
-
-		<main class="px-6 mx-auto max-w-5xl">
-			<slot />
-		</main>
+	<body class="min-h-screen pb-20 bg-gray-900 animate-blurred-fade-in duration-50">
 		
+	<slot></slot>
 	</body>
 </html>
 <style is:global>
+	
 	html {
-		font-family: system-ui, sans-serif;
+		font-family:'DM Sans Variable'!important;
 		background: #13151a;
 		color-scheme: dark light;
 	}
@@ -69,6 +79,7 @@ const { title } = Astro.props;
 	::-webkit-scrollbar-thumb:hover {
 		background: #01c0ff;
 	}
+	
 	@supports (scrollbar-color: #4481eb #797979;) {
 		 {
 			scrollbar-color: #4481eb #797979;

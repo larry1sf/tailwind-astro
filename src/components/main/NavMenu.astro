@@ -1,0 +1,51 @@
+---
+import { Icon } from "astro-icon/components";
+import Options from "./busqueda/options.astro";
+---
+
+<nav class="h-full p-2 basis-2/5 menu bg-gray-6">
+    <section class="menu-section">
+        <span
+            class="py-1 text-xl font-bold text-center capitalize text-slate-300 menu-title"
+        >
+            Búsqueda por categorias
+        </span>
+        <ul class="menu-items">
+            <Options
+                texto="Categorias"
+                op1="mas popuares"
+                op2="favoritos de la comunidad"
+                op3="recien añadidos"
+                op4="animes finalizados"
+            >
+                <Icon name="filter1" size={24} slot="svg-option" />
+            </Options>
+            <div class="before:bg-white after:bg-white divider">Opciones</div>
+            <Options
+                texto="Ajustes"
+                op1="Perfil"
+                op2="Favoritos"
+                op3="comunidad"
+                op4="Toda la colección"
+            >
+                <Icon name="profile" slot="svg-op1" size={22} />
+                <Icon name="start" slot="svg-op2" size={22} />
+                <Icon name="news" slot="svg-op3" size={22} />
+                <Icon name="coleccion" slot="svg-op4" size={22} />
+            </Options>
+            <Options
+                texto="Acerca de"
+                op1="Creador"
+                op2="Mas animes"
+                op3="Como colaborar"
+                op4="Fuentes de recursos"
+            >
+                <Icon name="acerca" slot="svg-option" size={24} />
+                <Icon name="creador" slot="svg-op1" size={22} />
+                <Icon name="masAnimes" slot="svg-op2" size={22} />
+                <Icon name="colaborar" slot="svg-op3" size={22} />
+                <Icon name="fuentes" slot="svg-op4" size={22} />
+            </Options>
+        </ul>
+    </section>
+</nav>
